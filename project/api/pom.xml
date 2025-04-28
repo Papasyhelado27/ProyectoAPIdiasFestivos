@@ -8,7 +8,7 @@
         <version>3.4.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>proyect</groupId>
+    <groupId>diasfestivos</groupId>
     <artifactId>api</artifactId>
     <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
