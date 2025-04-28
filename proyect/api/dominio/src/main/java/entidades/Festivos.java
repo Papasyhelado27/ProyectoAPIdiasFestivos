@@ -4,16 +4,16 @@ import org.hibernate.annotations.GenericGenerator;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.*;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.GeneratedValue;
 @Entity
 @Table(name = "festivos")
 public class Festivos {
 
-   
-   
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO, generator = "secuencia_Festivos")
         @GenericGenerator(name = "secuencia_Festivos", strategy = "increment")
