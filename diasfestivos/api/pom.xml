@@ -30,6 +30,8 @@
 
     <modules>
         <module>dominio</module>
+        <module>core</module>
+        <module>infraestructura</module>
     </modules>
 		
 	
