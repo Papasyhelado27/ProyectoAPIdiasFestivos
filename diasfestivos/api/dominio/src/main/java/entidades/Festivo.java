@@ -29,8 +29,8 @@ public class Festivo {
         @Column(name = "mes", length = 100, unique = true)
         private int mes;
 
-        @Column(name = "diapascua", length = 100, unique = true)
-        private int diaPascua;
+        @Column(name = "diaspascua", length = 100, unique = true)
+        private int diasPascua;
         @ManyToOne
         @JoinColumn(name = "idtipo", referencedColumnName = "id")
         private Tipo clasificacionFestivo;
@@ -38,12 +38,12 @@ public class Festivo {
         public Festivo() {
         }
 
-        public Festivo(int id, String nombre, int dia, int mes, int diaPascua, Tipo clasificacionFestivo) {
+        public Festivo(int id, String nombre, int dia, int mes, int diasPascua, Tipo clasificacionFestivo) {
             this.id = id;
             this.nombre = nombre;
             this.dia = dia;
             this.mes = mes;
-            this.diaPascua = diaPascua;
+            this.diasPascua = diasPascua;
             this.clasificacionFestivo = clasificacionFestivo;
         }
 
@@ -79,12 +79,12 @@ public class Festivo {
             this.mes = mes;
         }
 
-        public int getDiaPascua() {
-            return diaPascua;
+        public int getDiasPascua() {
+            return diasPascua;
         }
 
-        public void setDiaPascua(int diaPascua) {
-            this.diaPascua = diaPascua;
+        public void setDiasPascua(int diasPascua) {
+            this.diasPascua = diasPascua;
         }
 
         public Tipo getClasificacionFestivo() {
