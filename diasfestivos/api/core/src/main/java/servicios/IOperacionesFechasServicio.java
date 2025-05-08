@@ -14,4 +14,6 @@ public interface IOperacionesFechasServicio {
 
     public Date obtenerFechaDomingoPascua();
 
+    public Date validarFechaFestivo();
+
 }
