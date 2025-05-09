@@ -16,13 +16,13 @@ public interface IFestivoRepositorio extends JpaRepository<Festivo, Integer> {
 
     // Seleccionar festivo basado en dia y mes para festivos cuya fecha no cambia
     @Query("SELECT f FROM Festivo f " +
-        "WHERE f.tipo = 1 " +
+        "WHERE f.clasificacionFestivo.id = 1 " +
         "AND f.mes = ?1 " +
         "AND f.dia = ?2")
     public List<Festivo> buscarFestivoTipo1(int mes, int dia);
 
     // Obtener festivo por tipo
-    @Query("SELECT f FROM festivo f " +
-        "WHERE f.tipo = ?1")
+    @Query("SELECT f FROM Festivo f " +
+        "WHERE f.clasificacionFestivo.id = ?1")
     public List<Festivo> listarFestivoPorTipo(int idTipo);
 }

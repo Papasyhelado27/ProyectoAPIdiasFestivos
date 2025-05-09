@@ -31,6 +31,7 @@ public class Festivo {
 
         @Column(name = "diaspascua", length = 100, unique = true)
         private int diasPascua;
+        
         @ManyToOne
         @JoinColumn(name = "idtipo", referencedColumnName = "id")
         private Tipo clasificacionFestivo;

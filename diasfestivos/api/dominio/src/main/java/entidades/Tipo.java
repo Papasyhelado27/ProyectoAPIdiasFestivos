@@ -10,7 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tipos")
+@Table(name = "tipo")
 public class Tipo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "secuencia_tipos")

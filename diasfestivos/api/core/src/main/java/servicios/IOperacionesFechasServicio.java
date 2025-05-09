@@ -24,4 +24,6 @@ public interface IOperacionesFechasServicio {
 
     public boolean validarFechaFestivo(int año, int mes, int dia);
 
+    public String esFestivo(int año, int mes, int dia);
+
 }

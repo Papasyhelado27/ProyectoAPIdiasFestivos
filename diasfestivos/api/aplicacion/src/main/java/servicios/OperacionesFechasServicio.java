@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Calendar;
 
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import diasfestivos.api.core.servicios.*;
 import diasfestivos.api.dominio.entidades.*;
@@ -13,6 +14,7 @@ import diasfestivos.api.infraestructura.repositorios.*;
 @Service
 public class OperacionesFechasServicio implements IOperacionesFechasServicio {
 
+    @Autowired
     private IFestivoServicio festivoServicio;
 
     public OperacionesFechasServicio(IFestivoServicio festivoServicio) {
@@ -119,6 +121,13 @@ public class OperacionesFechasServicio implements IOperacionesFechasServicio {
 
         return false;
 
+    }
+
+    public String esFestivo(int año, int mes, int dia){
+        if(validarFechaFestivo(año, mes, dia))
+            return "Es festivo";
+        else
+            return "No es festivo";
     }
 
     
