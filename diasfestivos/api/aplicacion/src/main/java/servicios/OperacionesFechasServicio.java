@@ -63,10 +63,8 @@ public class OperacionesFechasServicio implements IOperacionesFechasServicio {
 
     }
 
-    public Date obtenerFechaDomingoPascua(int año){ 
-
-        return obtenerDomingoRamos(año);
-
+    public Date obtenerFechaDomingoPascua(int año){
+        return agregarDias(obtenerDomingoRamos(año), 7)
     }
 
     public boolean validarPorFestivoTipo1(int año, int mes, int dia){
