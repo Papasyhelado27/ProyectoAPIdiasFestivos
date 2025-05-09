@@ -14,7 +14,7 @@ public interface IFestivoServicio {
 
     public Festivo obtener(int id);
 
-    public List<Festivo> buscarPorNombre(String nombre);
+    public List<Festivo> buscar(String nombre);
 
     public Festivo agregar(Festivo festivo);
 

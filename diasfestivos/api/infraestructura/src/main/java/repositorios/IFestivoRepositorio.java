@@ -11,6 +11,9 @@ import diasfestivos.api.dominio.entidades.*;
 @Repository
 public interface IFestivoRepositorio extends JpaRepository<Festivo, Integer> {
 
+    @Query("SELECT f FROM Festivo f WHERE f.nombre LIKE '%' || ?1 || '%'")
+    public List<Festivo> buscar(String nombre);
+
     // Seleccionar festivo basado en dia y mes para festivos cuya fecha no cambia
     @Query("SELECT f FROM Festivo f " +
         "WHERE f.tipo = 1 " +
@@ -18,8 +21,8 @@ public interface IFestivoRepositorio extends JpaRepository<Festivo, Integer> {
         "AND f.dia = ?2")
     public List<Festivo> buscarFestivoTipo1(int mes, int dia);
 
-    // Obtener festivo tipo 2
+    // Obtener festivo por tipo
     @Query("SELECT f FROM festivo f " +
-        "WHERE f.tipo = 2")
-    public List<Festivo> listarFestivoTipo2();
+        "WHERE f.tipo = ?1")
+    public List<Festivo> listarFestivoPorTipo(int idTipo);
 }

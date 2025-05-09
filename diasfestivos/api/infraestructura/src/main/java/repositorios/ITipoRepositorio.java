@@ -8,10 +8,15 @@ import org.springframework.stereotype.Repository;
 
 import diasfestivos.api.dominio.entidades.*;
 
-public interface ITipoRepositorio {
+@Repository
+public interface ITipoRepositorio extends JpaRepository<Tipo, Integer> {
 
-    // Buscar tipo basado en id
-    @Query("SELECT t FROM Tipo t  WHERE t.id = ?1")
-    public List<Tipo> buscarTipo(int id);
+    @Query("SELECT t FROM Tipo t WHERE t.nombre LIKE '%' || ?1 || '%'")
+    public List<Tipo> buscar(String nombre);
+
+
+    // Buscar tipo basado en id // Es lo mismo que find by id entonces no importa
+    // @Query("SELECT t FROM Tipo t  WHERE t.id = ?1")
+    // public List<Tipo> buscarPorId(int id);
 
 }

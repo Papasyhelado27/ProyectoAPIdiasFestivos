@@ -6,14 +6,22 @@ import java.util.Date;
 
 public interface IOperacionesFechasServicio {
 
-    public Date agregarDias();
+    public Date agregarDias(Date fecha, int dias);
     
-    public Date obtenerSiguienteLunes();
+    public Date obtenerSiguienteLunes(Date fecha);
 
-    public Date obtenerDomingoRamos();
+    public Date obtenerDomingoRamos(int año);
 
-    public Date obtenerFechaDomingoPascua();
+    public Date obtenerFechaDomingoPascua(int año);
 
-    public Date validarFechaFestivo();
+    public boolean validarPorFestivoTipo1(int año, int mes, int dia);
+
+    public boolean validarPorFestivoTipo2(int año, int mes, int dia);
+
+    public boolean validarPorFestivoTipo3(int año, int mes, int dia);
+
+    public boolean validarPorFestivoTipo4(int año, int mes, int dia);
+
+    public boolean validarFechaFestivo(int año, int mes, int dia);
 
 }
