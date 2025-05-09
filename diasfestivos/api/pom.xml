@@ -33,6 +33,7 @@
         <module>core</module>
         <module>infraestructura</module>
         <module>aplicacion</module>
+        <module>presentacion</module>
     </modules>
 		
 	

@@ -3,6 +3,7 @@ package diasfestivos.api.aplicacion.servicios;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import diasfestivos.api.core.servicios.*;
 import diasfestivos.api.dominio.entidades.*;
@@ -13,6 +14,7 @@ public class FestivoServicio implements IFestivoServicio {
 
     private IFestivoRepositorio repositorio;
 
+    @Autowired
     public FestivoServicio(IFestivoRepositorio repositorio) {
         this.repositorio = repositorio;
     }

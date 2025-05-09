@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Calendar;
 
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import diasfestivos.api.core.servicios.*;
 import diasfestivos.api.dominio.entidades.*;
@@ -13,6 +14,7 @@ import diasfestivos.api.infraestructura.repositorios.*;
 @Service
 public class OperacionesFechasServicio implements IOperacionesFechasServicio {
 
+    @Autowired
     private IFestivoServicio festivoServicio;
 
     public OperacionesFechasServicio(IFestivoServicio festivoServicio) {
@@ -26,10 +28,14 @@ public class OperacionesFechasServicio implements IOperacionesFechasServicio {
         return calendario.getTime();
     }
 
-    public Date obtenerSiguienteLunes(Date fecha){
+    
+    public Date obtenerSiguienteLunes(int año, int mes, int dia){
+        
+        Date fecha = new Date(año - 1900, mes - 1, dia);
+
         Calendar calendario = Calendar.getInstance();
         calendario.setTime(fecha);
-
+        
         int diaSemana = calendario.get(Calendar.DAY_OF_WEEK);
         if(diaSemana != Calendar.MONDAY) {
             if (diaSemana > Calendar.MONDAY)
@@ -69,18 +75,18 @@ public class OperacionesFechasServicio implements IOperacionesFechasServicio {
     }
 
     public boolean validarPorFestivoTipo2(int año, int mes, int dia){
+
+        Date determinarFestivo = new Date(año - 1900, mes - 1, dia);
+
         List<Festivo> festivosTipo2 =  festivoServicio.buscarPorTipo(2);
         Calendar calendarioFechaConsulta = Calendar.getInstance();
         calendarioFechaConsulta.set(año, mes - 1, dia);
         Date fechaConsulta = calendarioFechaConsulta.getTime();
 
         for(Festivo festivo : festivosTipo2) {
-            Calendar calendarioFechaFestivo = Calendar.getInstance();
-            calendarioFechaFestivo.set(año, festivo.getMes() - 1, festivo.getDia());
-            Date fechaFestivoOriginal = calendarioFechaFestivo.getTime();
-            Date siguienteLunes = obtenerSiguienteLunes(fechaFestivoOriginal);
-
-            if(fechaConsulta.equals(siguienteLunes)) {
+            siguienteLunes = obtenerSiguienteLunes(año, festivo.getMes(), festivo.getDia());
+            
+            if(determinarFestivo.equals(siguienteLunes))
                 return true;
             }
         }
@@ -136,18 +142,28 @@ public class OperacionesFechasServicio implements IOperacionesFechasServicio {
 
         // Si devuelve algo al buscar Festivo, entonces es festivo
         if(validarPorFestivoTipo1(año, mes, dia)) {
+            System.out.println("Festivo tipo 1");
             return true;
-            // Si no devuelve nada, validar que es tipo 2
-        } else if (validarPorFestivoTipo2(año, mes, dia)) { 
+        } else if (validarPorFestivoTipo2(año, mes, dia)) { // Si no devuelve nada, validar que es tipo 2
+            System.out.println("Festivo tipo 2");
             return true;
         } else if (validarPorFestivoTipo3(año, mes, dia)) {
+            System.out.println("Festivo tipo 3");
             return true;
         } else if (validarPorFestivoTipo4(año, mes, dia)) {
+            System.out.println("Festivo tipo 4");
             return true;
         }
 
         return false;
     }
 
+    public String esFestivo(int año, int mes, int dia){
+        if(validarFechaFestivo(año, mes, dia))
+            return "Es festivo";
+        else
+            return "No es festivo";
+    }
 
+    
 }
