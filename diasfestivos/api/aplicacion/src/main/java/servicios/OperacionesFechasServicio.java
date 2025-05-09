@@ -95,19 +95,48 @@ public class OperacionesFechasServicio implements IOperacionesFechasServicio {
     }
 
     public boolean validarPorFestivoTipo3(int año, int mes, int dia){
-
         List<Festivo> festivosTipo3 =  festivoServicio.buscarPorTipo(3);
+        Calendar calendarioFechaConsulta = Calendar.getInstance();
+        calendarioFechaConsulta.set(año, mes - 1, dia);
+        Date fechaConsulta = calendarioFechaConsulta.getTime();
 
+        Date domingoPascua = obtenerFechaDomingoPascua(año);
+        Calendar calendarioPascua = Calendar.getInstance();
+        calendarioPascua.setTime(domingoPascua);
+
+        for (Festivo festivo : festivosTipo3) {
+            Calendar calendarioFestivo = Calendar.getInstance();
+            calendarioFestivo.setTime(domingoPascua);
+            calendarioFestivo.add(Calendar.DATE, festivo.getEasterOffset());
+            if (calendarioFechaConsulta.get(Calendar.YEAR) == calendarioFestivo.get(Calendar.YEAR) &&
+                    calendarioFechaConsulta.get(Calendar.MONTH) == calendarioFestivo.get(Calendar.MONTH) &&
+                    calendarioFechaConsulta.get(Calendar.DAY_OF_MONTH) == calendarioFestivo.get(Calendar.DAY_OF_MONTH)) {
+                return true;
+            }
+        }
         return false;
-
     }
 
     public boolean validarPorFestivoTipo4(int año, int mes, int dia){
-
         List<Festivo> festivosTipo4 =  festivoServicio.buscarPorTipo(4);
+        Calendar calendarioFechaConsulta = Calendar.getInstance();
+        calendarioFechaConsulta.set(año, mes - 1, dia);
+        Date fechaConsulta = calendarioFechaConsulta.getTime();
 
+        Date domingoPascua = obtenerFechaDomingoPascua(año);
+
+        for (Festivo festivo : festivosTipo4) {
+            Calendar calendarioFestivo = Calendar.getInstance();
+            calendarioFestivo.setTime(domingoPascua);
+            calendarioFestivo.add(Calendar.DATE, festivo.getEasterOffset());
+            Date fechaFestivoOriginal = calendarioFestivo.getTime();
+            Date siguienteLunes = obtenerSiguienteLunes(fechaFestivoOriginal);
+
+            if (fechaConsulta.equals(siguienteLunes)) {
+                return true;
+            }
+        }
         return false;
-
     }
 
     public boolean validarFechaFestivo(int año, int mes, int dia){
