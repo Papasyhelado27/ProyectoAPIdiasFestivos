@@ -28,10 +28,13 @@ public class OperacionesFechasServicio implements IOperacionesFechasServicio {
         return calendario.getTime();
     }
     
-    public Date obtenerSiguienteLunes(Date fecha){
+    public Date obtenerSiguienteLunes(int año, int mes, int dia){
+        
+        Date fecha = new Date(año - 1900, mes - 1, dia);
+
         Calendar calendario = Calendar.getInstance();
         calendario.setTime(fecha);
-
+        
         int diaSemana = calendario.get(Calendar.DAY_OF_WEEK);
         if(diaSemana != Calendar.MONDAY) {
             if (diaSemana > Calendar.MONDAY)
@@ -74,15 +77,16 @@ public class OperacionesFechasServicio implements IOperacionesFechasServicio {
 
     public boolean validarPorFestivoTipo2(int año, int mes, int dia){
 
+        Date determinarFestivo = new Date(año - 1900, mes - 1, dia);
+
         List<Festivo> festivosTipo2 =  festivoServicio.buscarPorTipo(2);
 
         Date siguienteLunes;
 
         for(Festivo festivo : festivosTipo2) {
-            Date fechaFestivo = new Date(año - 1900, festivo.getMes(), festivo.getDia());
-            siguienteLunes = obtenerSiguienteLunes(fechaFestivo);
+            siguienteLunes = obtenerSiguienteLunes(año, festivo.getMes(), festivo.getDia());
             
-            if(fechaFestivo.equals(siguienteLunes))
+            if(determinarFestivo.equals(siguienteLunes))
                 return true;
         }
 
@@ -110,12 +114,16 @@ public class OperacionesFechasServicio implements IOperacionesFechasServicio {
         
         // Si devuelve algo al buscar el Festivo, entonces es festivo
         if(validarPorFestivoTipo1(año, mes, dia)) {
+            System.out.println("Festivo tipo 1");
             return true;
         } else if (validarPorFestivoTipo2(año, mes, dia)) { // Si no devuelve nada, validar que es tipo 2
+            System.out.println("Festivo tipo 2");
             return true;
         } else if (validarPorFestivoTipo3(año, mes, dia)) {
+            System.out.println("Festivo tipo 3");
             return true;
         } else if (validarPorFestivoTipo4(año, mes, dia)) {
+            System.out.println("Festivo tipo 4");
             return true;
         }
 

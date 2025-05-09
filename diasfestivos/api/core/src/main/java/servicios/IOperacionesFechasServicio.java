@@ -8,7 +8,7 @@ public interface IOperacionesFechasServicio {
 
     public Date agregarDias(Date fecha, int dias);
     
-    public Date obtenerSiguienteLunes(Date fecha);
+    public Date obtenerSiguienteLunes(int año, int mes, int dia);
 
     public Date obtenerDomingoRamos(int año);
 
