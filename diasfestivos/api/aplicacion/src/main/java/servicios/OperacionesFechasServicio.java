@@ -27,7 +27,6 @@ public class OperacionesFechasServicio implements IOperacionesFechasServicio {
         calendario.add(Calendar.DATE, dias);
         return calendario.getTime();
     }
-
     
     public Date obtenerSiguienteLunes(int año, int mes, int dia){
         
@@ -39,12 +38,13 @@ public class OperacionesFechasServicio implements IOperacionesFechasServicio {
         int diaSemana = calendario.get(Calendar.DAY_OF_WEEK);
         if(diaSemana != Calendar.MONDAY) {
             if (diaSemana > Calendar.MONDAY)
-                calendario.add(Calendar.DATE, 9 - diaSemana);
+                fecha = agregarDias(fecha, 9 - diaSemana);
             else
-                calendario.add(Calendar.DATE, Calendar.MONDAY - diaSemana);
+                fecha = agregarDias(fecha, 1);
         }
 
-        return calendario.getTime();
+        return fecha;
+
     }
 
     // obtener inicio de Semana Sante
@@ -56,22 +56,23 @@ public class OperacionesFechasServicio implements IOperacionesFechasServicio {
 
         int dias = d + (2 * b + 4 * c + 6 * d + 5) % 7;
 
-        Calendar calendario = Calendar.getInstance();
-        calendario.set(año, Calendar.MARCH, 15);
-        calendario.add(Calendar.DATE, dias);
+        int dia = 15 + dias;
+        int mes = 3;
 
-        return calendario.getTime();
+        return new Date(año - 1900, mes - 1, dia);
+
     }
 
-    public Date obtenerFechaDomingoPascua(int año){
-        Calendar calendario = Calendar.getInstance();
-        calendario.setTime(obtenerDomingoRamos(año));
-        calendario.add(Calendar.DATE, 7);
-        return calendario.getTime();
+    public Date obtenerFechaDomingoPascua(int año){ 
+
+        return obtenerDomingoRamos(año);
+
     }
 
     public boolean validarPorFestivoTipo1(int año, int mes, int dia){
+
         return !festivoServicio.buscarPorDiaMesTipo1(dia, mes).isEmpty();
+
     }
 
     public boolean validarPorFestivoTipo2(int año, int mes, int dia){
@@ -79,18 +80,18 @@ public class OperacionesFechasServicio implements IOperacionesFechasServicio {
         Date determinarFestivo = new Date(año - 1900, mes - 1, dia);
 
         List<Festivo> festivosTipo2 =  festivoServicio.buscarPorTipo(2);
-        Calendar calendarioFechaConsulta = Calendar.getInstance();
-        calendarioFechaConsulta.set(año, mes - 1, dia);
-        Date fechaConsulta = calendarioFechaConsulta.getTime();
+
+        Date siguienteLunes;
 
         for(Festivo festivo : festivosTipo2) {
             siguienteLunes = obtenerSiguienteLunes(año, festivo.getMes(), festivo.getDia());
             
             if(determinarFestivo.equals(siguienteLunes))
                 return true;
-            }
         }
+
         return false;
+
     }
 
     public boolean validarPorFestivoTipo3(int año, int mes, int dia){
@@ -139,8 +140,8 @@ public class OperacionesFechasServicio implements IOperacionesFechasServicio {
     }
 
     public boolean validarFechaFestivo(int año, int mes, int dia){
-
-        // Si devuelve algo al buscar Festivo, entonces es festivo
+        
+        // Si devuelve algo al buscar el Festivo, entonces es festivo
         if(validarPorFestivoTipo1(año, mes, dia)) {
             System.out.println("Festivo tipo 1");
             return true;
@@ -156,6 +157,7 @@ public class OperacionesFechasServicio implements IOperacionesFechasServicio {
         }
 
         return false;
+
     }
 
     public String esFestivo(int año, int mes, int dia){
