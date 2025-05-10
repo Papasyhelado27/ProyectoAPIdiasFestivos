@@ -1,4 +1,4 @@
-### Compilar capaz
+### Compilar capas individuales
 mvn clean install -pl <capa>
 
 ### Compilar todo el proyecto

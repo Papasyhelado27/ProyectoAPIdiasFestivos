@@ -22,7 +22,7 @@ public class OperacionesFechasControlador {
 
     @RequestMapping(value = "/verificar/{año}/{mes}/{dia}", method = RequestMethod.GET)
     public String verificar(@PathVariable int año, @PathVariable int mes, @PathVariable int dia) {
-        return servicio.esFestivo(año, mes, dia);
+        return servicio.esFechaValida(año, mes, dia);
     }
 
 }

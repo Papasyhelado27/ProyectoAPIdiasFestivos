@@ -26,4 +26,6 @@ public interface IOperacionesFechasServicio {
 
     public String esFestivo(int año, int mes, int dia);
 
+    public String esFechaValida(int año, int mes, int dia);
+
 }
