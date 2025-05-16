@@ -10,92 +10,91 @@ import jakarta.persistence.Table;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
+
 @Entity
 @Table(name = "festivo")
 public class Festivo {
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.AUTO, generator = "secuencia_festivo")
-        @GenericGenerator(name = "secuencia_festivo", strategy = "increment")
-        @Column(name = "id")
-        private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "secuencia_festivo")
+    @GenericGenerator(name = "secuencia_festivo", strategy = "increment")
+    @Column(name = "id")
+    private int id;
 
-        @Column(name = "nombre", length = 100, unique = true)
-        private String nombre;
+    @Column(name = "nombre", length = 100, unique = true)
+    private String nombre;
 
-        @Column(name = "dia", length = 100, unique = true)
-        private int dia;
+    @Column(name = "dia", length = 100, unique = true)
+    private int dia;
 
-        @Column(name = "mes", length = 100, unique = true)
-        private int mes;
+    @Column(name = "mes", length = 100, unique = true)
+    private int mes;
 
-        @Column(name = "diaspascua", length = 100, unique = true)
-        private int diasPascua;
-        
-        @ManyToOne
-        @JoinColumn(name = "idtipo", referencedColumnName = "id")
-        private Tipo clasificacionFestivo;
+    @Column(name = "diaspascua", length = 100, unique = true)
+    private int diasPascua;
 
-        public Festivo() {
-        }
+    @ManyToOne
+    @JoinColumn(name = "idtipo", referencedColumnName = "id")
+    private Tipo clasificacionFestivo;
 
-        public Festivo(int id, String nombre, int dia, int mes, int diasPascua, Tipo clasificacionFestivo) {
-            this.id = id;
-            this.nombre = nombre;
-            this.dia = dia;
-            this.mes = mes;
-            this.diasPascua = diasPascua;
-            this.clasificacionFestivo = clasificacionFestivo;
-        }
+    public Festivo() {
+    }
 
-        public int getId() {
-            return id;
-        }
+    public Festivo(int id, String nombre, int dia, int mes, int diasPascua, Tipo clasificacionFestivo) {
+        this.id = id;
+        this.nombre = nombre;
+        this.dia = dia;
+        this.mes = mes;
+        this.diasPascua = diasPascua;
+        this.clasificacionFestivo = clasificacionFestivo;
+    }
 
-        public void setId(int id) {
-            this.id = id;
-        }
+    public int getId() {
+        return id;
+    }
 
-        public String getNombre() {
-            return nombre;
-        }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-        public void setNombre(String nombre) {
-            this.nombre = nombre;
-        }
+    public String getNombre() {
+        return nombre;
+    }
 
-        public int getDia() {
-            return dia;
-        }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-        public void setDia(int dia) {
-            this.dia = dia;
-        }
+    public int getDia() {
+        return dia;
+    }
 
-        public int getMes() {
-            return mes;
-        }
+    public void setDia(int dia) {
+        this.dia = dia;
+    }
 
-        public void setMes(int mes) {
-            this.mes = mes;
-        }
+    public int getMes() {
+        return mes;
+    }
 
-        public int getDiasPascua() {
-            return diasPascua;
-        }
+    public void setMes(int mes) {
+        this.mes = mes;
+    }
 
-        public void setDiasPascua(int diasPascua) {
-            this.diasPascua = diasPascua;
-        }
+    public int getDiasPascua() {
+        return diasPascua;
+    }
 
-        public Tipo getClasificacionFestivo() {
-            return clasificacionFestivo;
-        }
+    public void setDiasPascua(int diasPascua) {
+        this.diasPascua = diasPascua;
+    }
 
-        public void setClasificacionFestivo(Tipo clasificacionFestivo) {
-            this.clasificacionFestivo = clasificacionFestivo;
-        }
+    public Tipo getClasificacionFestivo() {
+        return clasificacionFestivo;
+    }
 
-        } 
+    public void setClasificacionFestivo(Tipo clasificacionFestivo) {
+        this.clasificacionFestivo = clasificacionFestivo;
+    }
 
-
+}
