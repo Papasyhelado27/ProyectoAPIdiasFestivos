@@ -11,7 +11,7 @@ import diasfestivos.api.dominio.entidades.*;
 @Repository
 public interface ITipoRepositorio extends JpaRepository<Tipo, Integer> {
 
-    @Query("SELECT t FROM Tipo t WHERE t.estandar LIKE '%' || ?1 || '%'")
+    @Query("SELECT t FROM Tipo t WHERE t.estandar ILIKE '%' || ?1 || '%'")
     public List<Tipo> buscar(String tipo);
 
 
