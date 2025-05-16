@@ -8,63 +8,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import diasfestivos.api.core.servicios.*;
+import diasfestivos.api.core.utils.*;
 import diasfestivos.api.dominio.entidades.*;
 import diasfestivos.api.infraestructura.repositorios.*;
 
+
 @Service
-public class OperacionesFechasServicio implements IOperacionesFechasServicio {
+public class ValidacionesFechasServicio implements IValidacionesFechaServicio {
 
     @Autowired
     private IFestivoServicio festivoServicio;
 
-    public OperacionesFechasServicio(IFestivoServicio festivoServicio) {
+    public ValidacionesFechasServicio(IFestivoServicio festivoServicio) {
         this.festivoServicio = festivoServicio;
-    }
-
-    public Date agregarDias(Date fecha, int dias){
-        Calendar calendario = Calendar.getInstance();
-        calendario.setTime(fecha);
-        calendario.add(Calendar.DATE, dias);
-        return calendario.getTime();
-    }
-    
-    public Date obtenerSiguienteLunes(int año, int mes, int dia){
-        
-        Date fecha = new Date(año - 1900, mes - 1, dia);
-
-        Calendar calendario = Calendar.getInstance();
-        calendario.setTime(fecha);
-        
-        int diaSemana = calendario.get(Calendar.DAY_OF_WEEK);
-        if(diaSemana != Calendar.MONDAY) {
-            if (diaSemana > Calendar.MONDAY)
-                fecha = agregarDias(fecha, 9 - diaSemana);
-            else
-                fecha = agregarDias(fecha, 1);
-        }
-
-        return fecha;
-
-    }
-
-    // obtener inicio de Semana Sante
-    public Date obtenerDomingoRamos(int año){
-        int a = año % 19;
-        int b = año % 4;
-        int c = año % 7;
-        int d = (19 * a + 24) % 30;
-
-        int dias = d + (2 * b + 4 * c + 6 * d + 5) % 7;
-
-        int dia = 15 + dias;
-        int mes = 3;
-
-        return new Date(año - 1900, mes - 1, dia);
-
-    }
-
-    public Date obtenerFechaDomingoPascua(int año){
-        return agregarDias(obtenerDomingoRamos(año), 7);
     }
 
     public boolean validarPorFestivoTipo1(int año, int mes, int dia){
@@ -82,7 +38,7 @@ public class OperacionesFechasServicio implements IOperacionesFechasServicio {
         Date siguienteLunes;
 
         for(Festivo festivo : festivosTipo2) {
-            siguienteLunes = obtenerSiguienteLunes(año, festivo.getMes(), festivo.getDia());
+            siguienteLunes = IOperacionesFechasUtils.obtenerSiguienteLunes(año, festivo.getMes(), festivo.getDia());
             
             if(determinarFestivo.equals(siguienteLunes))
                 return true;
@@ -98,7 +54,7 @@ public class OperacionesFechasServicio implements IOperacionesFechasServicio {
 
         Date fechaConsulta = new Date(año - 1900, mes - 1, dia);
 
-        Date domingoPascua = obtenerFechaDomingoPascua(año);
+        Date domingoPascua = IOperacionesFechasUtils.obtenerFechaDomingoPascua(año);
 
         for (Festivo festivo : festivosTipo3) {
 
@@ -106,7 +62,7 @@ public class OperacionesFechasServicio implements IOperacionesFechasServicio {
             calendarioFestivo.setTime(domingoPascua);
             Date fechaFestivo = calendarioFestivo.getTime();
 
-            fechaFestivo = agregarDias(fechaFestivo, festivo.getDiasPascua());
+            fechaFestivo = IOperacionesFechasUtils.agregarDias(fechaFestivo, festivo.getDiasPascua());
 
             if(fechaConsulta.equals(fechaFestivo))
                 return true;
@@ -120,7 +76,7 @@ public class OperacionesFechasServicio implements IOperacionesFechasServicio {
         List<Festivo> festivosTipo4 =  festivoServicio.buscarPorTipo(4);
         Date fechaConsulta = new Date(año - 1900, mes - 1, dia);
 
-        Date domingoPascua = obtenerFechaDomingoPascua(año);
+        Date domingoPascua = IOperacionesFechasUtils.obtenerFechaDomingoPascua(año);
 
         for (Festivo festivo : festivosTipo4) {
 
@@ -128,11 +84,11 @@ public class OperacionesFechasServicio implements IOperacionesFechasServicio {
             calendarioFestivo.setTime(domingoPascua);
             Date fechaFestivo = calendarioFestivo.getTime();
 
-            fechaFestivo = agregarDias(fechaFestivo, festivo.getDiasPascua());
+            fechaFestivo = IOperacionesFechasUtils.agregarDias(fechaFestivo, festivo.getDiasPascua());
 
             calendarioFestivo.setTime(fechaFestivo);
 
-            fechaFestivo = obtenerSiguienteLunes(calendarioFestivo.get(Calendar.YEAR), calendarioFestivo.get(Calendar.MONTH) + 1, calendarioFestivo.get(Calendar.DAY_OF_MONTH));
+            fechaFestivo = IOperacionesFechasUtils.obtenerSiguienteLunes(calendarioFestivo.get(Calendar.YEAR), calendarioFestivo.get(Calendar.MONTH) + 1, calendarioFestivo.get(Calendar.DAY_OF_MONTH));
 
             if(fechaConsulta.equals(fechaFestivo))
                 return true;
@@ -162,20 +118,20 @@ public class OperacionesFechasServicio implements IOperacionesFechasServicio {
 
     }
 
-    public String esFestivo(int año, int mes, int dia){
+    public String validarSiEsFestivo(int año, int mes, int dia){
         if(validarFechaFestivo(año, mes, dia))
             return "Es festivo";
         else
             return "No es festivo";
     }
 
-    public String esFechaValida(int año, int mes, int dia) {
+    public String validarSiEsFechaValida(int año, int mes, int dia) {
         Calendar calendar = Calendar.getInstance();
         calendar.setLenient(false);
         try {
             calendar.set(año, mes, dia);
             calendar.getTime();
-            return esFestivo(año, mes, dia);
+            return validarSiEsFestivo(año, mes, dia);
         } catch (Exception e) {
             return "Fecha no válida";
         }

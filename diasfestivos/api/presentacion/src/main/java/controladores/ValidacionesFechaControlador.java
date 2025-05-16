@@ -12,17 +12,17 @@ import diasfestivos.api.core.servicios.*;
 
 @RestController
 @RequestMapping("/festivos")
-public class OperacionesFechasControlador {
+public class ValidacionesFechaControlador {
 
-    private IOperacionesFechasServicio servicio;
+    private IValidacionesFechaServicio servicio;
 
-    public OperacionesFechasControlador(IOperacionesFechasServicio servicio) {
+    public ValidacionesFechaControlador(IValidacionesFechaServicio servicio) {
         this.servicio = servicio;
     }
 
     @RequestMapping(value = "/verificar/{año}/{mes}/{dia}", method = RequestMethod.GET)
     public String verificar(@PathVariable int año, @PathVariable int mes, @PathVariable int dia) {
-        return servicio.esFechaValida(año, mes, dia);
+        return servicio.validarSiEsFechaValida(año, mes, dia);
     }
 
 }

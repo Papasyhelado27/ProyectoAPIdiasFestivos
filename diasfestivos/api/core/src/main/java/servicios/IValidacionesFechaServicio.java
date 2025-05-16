@@ -4,15 +4,7 @@ package diasfestivos.api.core.servicios;
 
 import java.util.Date;
 
-public interface IOperacionesFechasServicio {
-
-    public Date agregarDias(Date fecha, int dias);
-    
-    public Date obtenerSiguienteLunes(int año, int mes, int dia);
-
-    public Date obtenerDomingoRamos(int año);
-
-    public Date obtenerFechaDomingoPascua(int año);
+public interface IValidacionesFechaServicio {
 
     public boolean validarPorFestivoTipo1(int año, int mes, int dia);
 
@@ -24,8 +16,8 @@ public interface IOperacionesFechasServicio {
 
     public boolean validarFechaFestivo(int año, int mes, int dia);
 
-    public String esFestivo(int año, int mes, int dia);
+    public String validarSiEsFestivo(int año, int mes, int dia);
 
-    public String esFechaValida(int año, int mes, int dia);
+    public String validarSiEsFechaValida(int año, int mes, int dia);
 
 }
